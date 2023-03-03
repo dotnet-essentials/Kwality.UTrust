@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "000. GIT.", "000. GIT.", "{1C4B2B0A-485D-471B-BC6B-35FFD69C5C7D}"
+	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
+		..\.gitignore = ..\.gitignore
+		..\LICENSE = ..\LICENSE
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "010. Github.", "010. Github.", "{24069704-CC55-4159-BEC7-500B85615C10}"
+	ProjectSection(SolutionItems) = preProject
+		..\.github\CODEOWNERS = ..\.github\CODEOWNERS
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "700. Source.", "700. Source.", "{13DF59F3-3CD2-43F4-996F-D77A830AEE08}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "800. Tests.", "800. Tests.", "{1141D09C-44A0-4F6A-9091-E241722D7ABD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM", "Kwality.UTrust.IAM\Kwality.UTrust.IAM.csproj", "{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM.Tests", "Kwality.UTrust.IAM.Tests\Kwality.UTrust.IAM.Tests.csproj", "{B87718A8-C4B5-438D-BA87-86567CBFEF03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE} = {13DF59F3-3CD2-43F4-996F-D77A830AEE08}
+		{B87718A8-C4B5-438D-BA87-86567CBFEF03} = {1141D09C-44A0-4F6A-9091-E241722D7ABD}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
