@@ -1,0 +1,169 @@
+# ======================================================================================================================
+# == LICENSE:       Copyright (c) 2023 Kevin De Coninck
+# ==
+# ==                Permission is hereby granted, free of charge, to any person
+# ==                obtaining a copy of this software and associated documentation
+# ==                files (the "Software"), to deal in the Software without
+# ==                restriction, including without limitation the rights to use,
+# ==                copy, modify, merge, publish, distribute, sublicense, and/or sell
+# ==                copies of the Software, and to permit persons to whom the
+# ==                Software is furnished to do so, subject to the following
+# ==                conditions:
+# ==
+# ==                The above copyright notice and this permission notice shall be
+# ==                included in all copies or substantial portions of the Software.
+# ==
+# ==                THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# ==                EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+# ==                OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# ==                NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+# ==                HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# ==                WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# ==                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# ==                OTHER DEALINGS IN THE SOFTWARE.
+# ======================================================================================================================
+
+# Common information for the Github workflow.
+name: Continuous Integration
+run-name: Build, Test & Analyze
+
+# Information to determine the conditions under which we want to run this Github workflow.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - '**'
+    paths:
+    - '**.sln'
+    - '**.cs'
+    - '**.csproj'
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    paths:
+    - '**.sln'
+    - '**.cs'
+    - '**.csproj'
+
+# Defines the jobs that are executed when this Github workflow is executed.
+jobs:
+
+  # Build the .NET Solution.
+  build:
+    name: Build on ${{ matrix.os }} using .NET ${{ matrix.dotnet-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macOS-latest ]
+        dotnet-version: [ '7.0.102' ]
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Install dependencies
+      working-directory: app
+      run: dotnet restore
+
+    - name: Build (Debug)
+      working-directory: app
+      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --configuration Debug --no-restore
+
+    - name: Build (Release)
+      working-directory: app
+      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --configuration Release --no-restore
+
+  # Test the .NET Solution.
+  test:
+    name: Test on ${{ matrix.os }} using .NET ${{ matrix.dotnet-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        dotnet-version: [ '7.0.102' ]
+    needs: build
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Install dependencies
+      working-directory: app
+      run: dotnet restore
+
+    - name: Build
+      working-directory: app
+      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --no-restore
+
+    - name: Run tests
+      working-directory: app
+      env:
+        AUTH0_TOKEN_ENDPOINT: ${{ secrets.AUTH0_TOKEN_ENDPOINT }}
+        AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+        AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        AUTH0_VALID_AUDIENCE: ${{ secrets.AUTH0_VALID_AUDIENCE }}
+        AUTH0_VALID_ISSUER: ${{ secrets.AUTH0_VALID_ISSUER }}
+        AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+      run: dotnet test --no-build --no-restore --logger trx --results-directory "TestResults-${{ matrix.dotnet-version }}"
+
+    - name: Upload results.
+      uses: actions/upload-artifact@v3
+      with:
+        name: dotnet-results-${{ matrix.dotnet-version }}
+        path: app/TestResults-${{ matrix.dotnet-version }}
+
+  # Analyze the .NET Solution using Sonarcloud.
+  analyze:
+    name: Analyze using Sonarcloud
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: [ '7.0.102' ]
+
+    steps:
+    - name: Set up JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 1.11
+
+    - name: Checkout the repository
+      uses: actions/checkout@v3
+
+    - name: Install SonarCloud
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
+  
+    - name: Setup .NET ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Build and analyze
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        AUTH0_TOKEN_ENDPOINT: ${{ secrets.AUTH0_TOKEN_ENDPOINT }}
+        AUTH0_USERNAME: ${{ secrets.AUTH0_USERNAME }}
+        AUTH0_PASSWORD: ${{ secrets.AUTH0_PASSWORD }}
+        AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
+        AUTH0_VALID_AUDIENCE: ${{ secrets.AUTH0_VALID_AUDIENCE }}
+        AUTH0_VALID_ISSUER: ${{ secrets.AUTH0_VALID_ISSUER }}
+        AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        AUTH0_CLIENT_SECRET: ${{ secrets.AUTH0_CLIENT_SECRET }}
+      run: |
+        dotnet-sonarscanner begin /k:"dotnet-essentials_Kwality.UTrust" /o:"dotnet-essentials" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html
+        dotnet tool install --global JetBrains.dotCover.GlobalTool
+        dotnet build /p:DefineConstants=AUTH0 --no-incremental app/Kwality.UTrust.sln
+        dotnet dotcover test app/Kwality.UTrust.sln --no-build --dcReportType=HTML --dcAttributeFilters=System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute
+        dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
