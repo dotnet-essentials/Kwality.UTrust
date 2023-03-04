@@ -46,7 +46,7 @@ internal sealed class AuthorizationComponentDiscoverer : TraitDiscovererBase
         var provider
             = traitAttribute.GetNamedArgument<ComponentProvider>(nameof(AuthorizationComponentAttribute.Provider));
 
-        yield return new KeyValuePair<string, string>("Component", $"Authorization - Provider: \'{provider}\'");
+        yield return new KeyValuePair<string, string>("Component", $"Authorization - Provider: {provider}");
     }
 }
 #pragma warning restore CA1812
