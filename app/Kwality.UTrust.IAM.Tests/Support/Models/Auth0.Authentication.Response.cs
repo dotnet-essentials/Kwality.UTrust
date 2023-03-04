@@ -22,14 +22,21 @@
 // =                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // =                OTHER DEALINGS IN THE SOFTWARE.
 // =====================================================================================================================
-#if AUTH0
 namespace Kwality.UTrust.IAM.Tests.Support.Models;
 
 using System.Text.Json.Serialization;
 
+using JetBrains.Annotations;
+
+[UsedImplicitly]
 internal sealed class Auth0AuthenticationResponse
 {
     [JsonPropertyName("access_token")]
-    public string? AccessToken { get; set; }
+    public string? AccessToken
+    {
+        get;
+
+        [UsedImplicitly]
+        set;
+    }
 }
-#endif

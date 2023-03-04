@@ -28,7 +28,5 @@ internal enum ComponentProvider
 {
     None = 0,
     Custom = 1,
-#if AUTH0
     Auth0 = 2,
-#endif
 }

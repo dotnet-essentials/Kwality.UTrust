@@ -22,7 +22,6 @@
 // =                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // =                OTHER DEALINGS IN THE SOFTWARE.
 // =====================================================================================================================
-#if AUTH0
 namespace Kwality.UTrust.IAM.Tests.Support.Factories;
 
 using System.Net.Http.Json;
@@ -63,4 +62,3 @@ internal static class Auth0AuthenticationFactory
         return responseModel?.AccessToken ?? string.Empty;
     }
 }
-#endif

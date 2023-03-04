@@ -69,13 +69,9 @@ jobs:
       working-directory: app
       run: dotnet restore
 
-    - name: Build (Debug)
+    - name: Build
       working-directory: app
-      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --configuration Debug --no-restore
-
-    - name: Build (Release)
-      working-directory: app
-      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --configuration Release --no-restore
+      run: dotnet build --no-incremental --no-restore
 
   # Test the .NET Solution.
   test:
@@ -102,7 +98,7 @@ jobs:
 
     - name: Build
       working-directory: app
-      run: dotnet build /p:DefineConstants=AUTH0 --no-incremental --no-restore
+      run: dotnet build --no-incremental --no-restore
 
     - name: Run tests
       working-directory: app
@@ -164,6 +160,6 @@ jobs:
       run: |
         dotnet-sonarscanner begin /k:"dotnet-essentials_Kwality.UTrust" /o:"dotnet-essentials" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.dotcover.reportsPaths=dotCover.Output.html
         dotnet tool install --global JetBrains.dotCover.GlobalTool
-        dotnet build /p:DefineConstants=AUTH0 --no-incremental app/Kwality.UTrust.sln
+        dotnet build --no-incremental app/Kwality.UTrust.sln
         dotnet dotcover test app/Kwality.UTrust.sln --no-build --dcReportType=HTML --dcAttributeFilters=System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute
         dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"

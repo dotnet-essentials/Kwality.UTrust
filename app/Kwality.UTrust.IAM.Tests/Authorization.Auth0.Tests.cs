@@ -22,7 +22,6 @@
 // =                FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // =                OTHER DEALINGS IN THE SOFTWARE.
 // =====================================================================================================================
-#if AUTH0
 namespace Kwality.UTrust.IAM.Tests;
 
 using System.Diagnostics.CodeAnalysis;
@@ -191,4 +190,3 @@ public sealed class AuthorizationAuth0Tests
              .ConfigureAwait(false);
     }
 }
-#endif
