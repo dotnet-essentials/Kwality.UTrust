@@ -31,6 +31,8 @@ using System.Net;
 using Kwality.UTrust.IAM.Abstractions.Abstractions;
 using Kwality.UTrust.IAM.Extensions;
 using Kwality.UTrust.IAM.Tests.Support;
+using Kwality.UTrust.IAM.Tests.Support.Xunit.Traits.Attributes;
+using Kwality.UTrust.IAM.Tests.Support.Xunit.Traits.Enumerations;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -44,6 +46,7 @@ public sealed class AuthorizationTests
     private const string defaultRoute = "/";
 
     [Fact(DisplayName = "Request an HTTP endpoint succeeds.")]
+    [AuthorizationComponent(ComponentProvider.None)]
     internal async Task Request_endpoint_succeeds()
     {
         // ACT / ASSERT.
@@ -71,6 +74,7 @@ public sealed class AuthorizationTests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint without a `JWT` fails.")]
+    [AuthorizationComponent(ComponentProvider.Custom)]
     internal async Task Request_secured_endpoint_without_jwt_fails()
     {
         // ACT / ASSERT.
@@ -102,6 +106,7 @@ public sealed class AuthorizationTests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint with an empty `JWT` fails.")]
+    [AuthorizationComponent(ComponentProvider.Custom)]
     internal async Task Request_secured_endpoint_with_empty_jwt_fails()
     {
         // ACT / ASSERT.
@@ -134,6 +139,7 @@ public sealed class AuthorizationTests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint with a valid `JWT` succeeds.")]
+    [AuthorizationComponent(ComponentProvider.Custom)]
     internal async Task Request_secured_endpoint_with_valid_jwt_succeeds()
     {
         // ARRANGE.

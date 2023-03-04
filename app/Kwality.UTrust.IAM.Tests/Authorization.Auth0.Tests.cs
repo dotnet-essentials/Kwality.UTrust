@@ -32,6 +32,8 @@ using Kwality.UTrust.IAM.Auth0.Extensions;
 using Kwality.UTrust.IAM.Extensions;
 using Kwality.UTrust.IAM.Tests.Support;
 using Kwality.UTrust.IAM.Tests.Support.Factories;
+using Kwality.UTrust.IAM.Tests.Support.Xunit.Traits.Attributes;
+using Kwality.UTrust.IAM.Tests.Support.Xunit.Traits.Enumerations;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -62,6 +64,7 @@ public sealed class AuthorizationAuth0Tests
     }
 
     [Fact(DisplayName = "Request an HTTP endpoint succeeds.")]
+    [AuthorizationComponent(ComponentProvider.None)]
     internal async Task Request_endpoint_succeeds()
     {
         // ACT / ASSERT.
@@ -90,6 +93,7 @@ public sealed class AuthorizationAuth0Tests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint without a `JWT` fails.")]
+    [AuthorizationComponent(ComponentProvider.Auth0)]
     internal async Task Request_secured_endpoint_without_jwt_fails()
     {
         // ACT / ASSERT.
@@ -121,6 +125,7 @@ public sealed class AuthorizationAuth0Tests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint with an empty `JWT` fails.")]
+    [AuthorizationComponent(ComponentProvider.Auth0)]
     internal async Task Request_secured_endpoint_with_empty_jwt_fails()
     {
         // ACT / ASSERT.
@@ -153,6 +158,7 @@ public sealed class AuthorizationAuth0Tests
     }
 
     [Fact(DisplayName = "Request a secured HTTP endpoint with a valid `JWT` succeeds.")]
+    [AuthorizationComponent(ComponentProvider.Auth0)]
     internal async Task Request_secured_endpoint_with_valid_jwt_succeeds()
     {
         // ARRANGE.
