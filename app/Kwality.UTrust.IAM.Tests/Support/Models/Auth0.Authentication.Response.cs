@@ -28,6 +28,7 @@ using System.Text.Json.Serialization;
 
 using JetBrains.Annotations;
 
+#pragma warning disable CA1812 // "Avoid uninstantiated internal classes" - By design. It's used.
 [UsedImplicitly]
 internal sealed class Auth0AuthenticationResponse
 {
@@ -40,3 +41,4 @@ internal sealed class Auth0AuthenticationResponse
         set;
     }
 }
+#pragma warning restore CA1812
