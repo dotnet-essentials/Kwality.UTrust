@@ -23,6 +23,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM", "Kwali
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM.Tests", "Kwality.UTrust.IAM.Tests\Kwality.UTrust.IAM.Tests.csproj", "{B87718A8-C4B5-438D-BA87-86567CBFEF03}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM.Abstractions", "Kwality.UTrust.IAM.Abstractions\Kwality.UTrust.IAM.Abstractions.csproj", "{90EBEF7D-51E8-4B76-85DE-DD819D75CA69}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kwality.UTrust.IAM.Auth0", "Kwality.UTrust.IAM.Auth0\Kwality.UTrust.IAM.Auth0.csproj", "{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE} = {13DF59F3-3CD2-43F4-996F-D77A830AEE08}
 		{B87718A8-C4B5-438D-BA87-86567CBFEF03} = {1141D09C-44A0-4F6A-9091-E241722D7ABD}
+		{90EBEF7D-51E8-4B76-85DE-DD819D75CA69} = {13DF59F3-3CD2-43F4-996F-D77A830AEE08}
+		{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998} = {13DF59F3-3CD2-43F4-996F-D77A830AEE08}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3917C1BB-CD5C-4A34-8FA7-1C77CD69F8BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -44,5 +50,13 @@ Global
 		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B87718A8-C4B5-438D-BA87-86567CBFEF03}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90EBEF7D-51E8-4B76-85DE-DD819D75CA69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90EBEF7D-51E8-4B76-85DE-DD819D75CA69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90EBEF7D-51E8-4B76-85DE-DD819D75CA69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90EBEF7D-51E8-4B76-85DE-DD819D75CA69}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2C15CB40-4393-43FD-ADF8-5C0ED7A7B998}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
