@@ -31,7 +31,7 @@ run-name: Continuous Integration (External Providers)
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 0 * * * # Run at the end of each day.
+    - cron: '0 0 * * *' # Run at the end of each day.
 
 # Defines the jobs that are executed when this Github workflow is executed.
 jobs:
