@@ -25,7 +25,7 @@
 
 # Common information for the Github workflow.
 name: Continuous Integration
-run-name: Build, Test & Analyze
+run-name: Continuous Integration
 
 # Information to determine the conditions under which we want to run this Github workflow.
 on:
